@@ -4,6 +4,8 @@ import { Switch, Route } from "react-router-dom";
 import { useEffect } from 'react';
 import { Routes } from './constants/routes';
 import MainPage from './pages/MainPage';
+import { setCurrentUSer } from './redux/reducers/auth_reducer';
+import { auth } from './firebase/firebase';
 
 function App() {
   const language = localStorage.getItem('language');
@@ -11,6 +13,11 @@ function App() {
     if (!localStorage.getItem('language')) {
       localStorage.setItem('language', 'vi');
     }
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setCurrentUSer(user);
+    })
+
+    return unsubscribe
   }, [])
   useEffect(() => {
     i18n.changeLanguage(language || 'vi');
@@ -19,9 +26,9 @@ function App() {
   return (
     <div className="app">
       <Switch>
-      <Route path={Routes.MAIN_PAGE} exact>
-        <MainPage />
-      </Route>
+        <Route path={Routes.MAIN_PAGE} exact>
+          <MainPage />
+        </Route>
       </Switch>
     </div>
   );
