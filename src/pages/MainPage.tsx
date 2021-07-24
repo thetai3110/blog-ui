@@ -1,10 +1,15 @@
 
-import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { useDispatch } from "react-redux";
+import { requestGetLstBlogs } from "../redux/reducers/blog_reducer";
 
 const MainPage = () => {
-  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
+  useEffect(()=>{
+    dispatch(requestGetLstBlogs());
+  }, [])
   return (
     <div className="main-board">
       <Helmet>
