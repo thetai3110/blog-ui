@@ -1,17 +1,18 @@
-import app from "../firebase/firebase";
-import { getLstBlogsFalure, getLstBlogsSuccess } from "../redux/reducers/blog_reducer";
+import { fireStorage } from "../firebase/firebase";
+import { ResponseType } from "../types/ResponseType";
 
-const fetchLstBlogs = (dispatch: any): void => {
+const fetchLstBlogs = async () => {
     try {
-        const db = app.database().ref('Blogs');
-        db.on('value', (snap) => {
-            if (snap.val() !== null) {
-                dispatch(getLstBlogsSuccess({ code: 500, msg: 'Fetch successfully!', data: snap.val() }))
-            };
+        const res = await fireStorage.collection("users").get();
+        const data: Array<object> = [];
+        res.forEach(doc => {
+            data.push(doc.data())
         })
-    } catch {
-        dispatch(getLstBlogsFalure({ code: 500, msg: 'Fetch eror!', data: null }));
+        return { code: 200, msg: 'Fetch successfully!', data: data } as ResponseType;
+    } catch(err) {
+        console.log(err);
     }
+    return { code: 500, msg: 'Fetch error!', data: null } as ResponseType;
 }
 const BlogApi = {
     fetchLstBlogs

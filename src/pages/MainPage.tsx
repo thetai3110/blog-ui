@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
-import BlogApi from '../apis/blog_api';
+import { requestGetLstBlogs } from "../redux/reducers/blog_reducer";
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
   const blogs = useAppSelector((state: RootState) => state.blogReducer.lstBlogs)
   useEffect(() => {
-    BlogApi.fetchLstBlogs(dispatch);
+    dispatch(requestGetLstBlogs());
   }, [dispatch])
   return (
     <div className="main-board">
