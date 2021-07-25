@@ -1,4 +1,9 @@
 export interface Blog {
+   elements: Array<Element>
+   totalElements: number,
+}
+
+interface Element {
     author: string,
     title: string,
     summary: string
