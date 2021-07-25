@@ -6,18 +6,20 @@ import { Routes } from './constants/routes';
 import MainPage from './pages/MainPage';
 import { setCurrentUSer } from './redux/reducers/auth_reducer';
 import { auth } from './firebase/firebase';
+import { useAppDispatch } from './redux/hooks';
 
 function App() {
   const language = localStorage.getItem('language');
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (!localStorage.getItem('language')) {
       localStorage.setItem('language', 'vi');
     }
     const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUSer(user);
+      dispatch(setCurrentUSer(user));
     })
     return unsubscribe
-  }, [])
+  }, [dispatch])
   useEffect(() => {
     i18n.changeLanguage(language || 'vi');
   }, [language])

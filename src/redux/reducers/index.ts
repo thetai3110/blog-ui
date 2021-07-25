@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 import { blogReducer } from './blog_reducer';
 import { authReducer } from './auth_reducer';
 
-export const rootReducer = combineReducers({
+export default combineReducers({
     blogReducer,
     authReducer
 })
+
+// export type RootState = ReturnType<typeof rootReducer>

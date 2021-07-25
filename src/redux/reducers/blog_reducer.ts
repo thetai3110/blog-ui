@@ -1,5 +1,3 @@
-import { Blog } from "../../types/Blog";
-
 export enum GetLstBlogs {
     REQUEST = 'GET_LST_BLOG_REQUEST',
     SUCCESS = 'GET_LST_BLOG_SUCCESS',
@@ -20,7 +18,7 @@ export const getLstBlogsFalure = (error: any) => ({
     payload: error
 })
 
-export const blogReducer = (state = { loading: false, lstBlogs: [], error: {} }, action: any) => {
+export const blogReducer = (state = { loading: false, lstBlogs: [], error: "" }, action: any) => {
     const { type } = action;
     switch (type) {
         case GetLstBlogs.REQUEST: {
